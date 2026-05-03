@@ -1,0 +1,26 @@
+class Solution {
+public:
+    int eraseOverlapIntervals(vector<vector<int>>& intervals) {
+        sort(intervals.begin(), intervals.end(), [](auto& x, auto& y) {
+            return x[1] < y[1];
+        });
+
+        int res = 0;
+        int lastEnd = intervals[0][1];
+
+        for (int i = 1; i < intervals.size(); i++) {
+             // DEBUG:
+            // cout << "(" <<intervals[i][0] << ", " << intervals[i][1] << ")";
+            int currStart = intervals[i][0];
+            int currEnd = intervals[i][1];
+
+            if ( currStart < lastEnd ) { // Overlap
+                res++; // Count overlaps
+            } else {
+                // currStart >= lastEnd, no overlap
+                lastEnd = currEnd; // Update end time to current end time, which is later due to sort
+            }
+        }
+        return res;
+    }
+};
